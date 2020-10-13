@@ -26,8 +26,16 @@ export const Editor = () => {
 	useEffect(() => {
 		if (divEl.current) {
 			editor = monaco.editor.create(divEl.current, {
-				value: ['const foo = () => {', '\tconsole.log("Hello Webinar!");', '}'].join('\n'),
-				language: 'typescript'
+				value: ['const foo = () => {', '\tconsole.log("Hello Webinar!!!!!!!!!!!!");', '}'].join('\n'),
+				language: 'typescript',
+				minimap: {
+					enabled: false
+				},
+				fontFamily: "Helvetica",
+				fontSize: "20px",
+				cursorStyle: "block",
+				glyphMargin: true,
+				lineNumbers: false
 			});
 		}
 		return () => editor.dispose();
