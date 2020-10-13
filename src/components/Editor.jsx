@@ -19,6 +19,16 @@ self.MonacoEnvironment = {
 	}
 };
 
+const customTheme = monaco.editor.defineTheme('webinar-theme', {
+	base: 'vs-dark',
+	inherit: true,
+	colors: {
+		'editor.foreground': '#a92',
+        'editor.background': '#444',
+	},
+	rules: []
+})
+
 export const Editor = () => {
 	const divEl = useRef(null);
 	let editor;
@@ -37,6 +47,7 @@ export const Editor = () => {
 				glyphMargin: true,
 				lineNumbers: false
 			});
+			monaco.editor.setTheme('webinar-theme');
 		}
 		return () => editor.dispose();
 		
