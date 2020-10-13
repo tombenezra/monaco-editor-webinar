@@ -14,6 +14,7 @@ module.exports = {
 		'ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker'
 	},
 	devServer: {
+		open: true,
 		hot: true
 	},
 	resolve: {
