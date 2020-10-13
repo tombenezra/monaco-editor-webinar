@@ -17,6 +17,7 @@ module.exports = {
 		open: true,
 		hot: true
 	},
+	devtool: 'inline-source-map',
 	resolve: {
 		extensions: ['*', '.js', '.jsx']
 	},

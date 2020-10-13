@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import * as monaco from 'monaco-editor';
+import { js_beautify } from 'js-beautify'
 
 self.MonacoEnvironment = {
 	getWorkerUrl: function (_moduleId, label) {
@@ -24,7 +25,7 @@ const customTheme = monaco.editor.defineTheme('webinar-theme', {
 	inherit: true,
 	colors: {
 		'editor.foreground': '#a92',
-        'editor.background': '#444',
+		'editor.background': '#444',
 	},
 	rules: []
 })
@@ -49,8 +50,30 @@ export const Editor = () => {
 			});
 			monaco.editor.setTheme('webinar-theme');
 		}
-		return () => editor.dispose();
+
+		const formatDocument = () => {
+			const value = editor.getValue();
+			const model = editor.getModel();
+			const formatted = js_beautify(value, { good_stuff: true, indent_size: 4 })
+
+			if (formatted !== value) {
+				model.pushEditOperations([], [{ range: model.getFullModelRange(), text: formatted }])
+			}
+		}
+
+		editor.addCommand(monaco.KeyMod.CtrlCmd |
+			monaco.KeyMod.Shift | monaco.KeyCode.KEY_F, formatDocument)
 		
+		editor.addAction({
+			id: 'js-format',
+			label: 'Format Code',
+			keybindings: [monaco.KeyMod.CtrlCmd |
+				monaco.KeyMod.Shift | monaco.KeyCode.KEY_X],
+			run: formatDocument
+		})
+
+		return () => editor.dispose();
 	}, []);
+
 	return <div className="Editor" ref={divEl}></div>;
 };
